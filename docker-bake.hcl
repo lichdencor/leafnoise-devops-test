@@ -5,9 +5,6 @@ group "default" {
 target "backend" {
   context = "./backend"
   dockerfile = "Dockerfile"
-  args = {
-    GITHUB_ACTOR = "${GITHUB_ACTOR}"
-  }
   tags = ["leafnoise-backend:latest"]
 }
 
@@ -16,9 +13,6 @@ target "frontend" {
   dockerfile = "Dockerfile"
   contexts = {
     nginx = "./nginx"
-  }
-  args = {
-    GITHUB_ACTOR = "${GITHUB_ACTOR}"
   }
   tags = ["leafnoise-frontend:latest"]
 }
