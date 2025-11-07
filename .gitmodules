@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/lichdencor/Flask-Example.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/lichdencor/angular-realworld-example-app.git

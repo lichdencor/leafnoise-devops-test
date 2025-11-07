@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: leafnoise-backend:latest
+    container_name: flask-backend
+    expose:
+      - "6969"
+    networks:
+      - leafnoise-net
+
+  frontend:
+    build:
+      context: ./frontend
+    image: leafnoise-frontend:latest
+    container_name: nginx-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - leafnoise-net
+
+networks:
+  leafnoise-net:
+    driver: bridge
