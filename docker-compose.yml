@@ -4,7 +4,7 @@ services:
       context: ./backend
     image: leafnoise-backend:latest
     container_name: flask-backend
-    expose:
+    ports:
       - "6969"
     networks:
       - leafnoise-net
