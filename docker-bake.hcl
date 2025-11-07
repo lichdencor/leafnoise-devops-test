@@ -2,20 +2,27 @@ group "default" {
   targets = ["backend", "frontend"]
 }
 
-# contexto Backend
+variable "VERSION" {
+  default = "latest"
+}
+
+# --- Backend ---
 target "backend" {
   context = "./backend"
   dockerfile = "Dockerfile"
-  tags = ["leafnoise-backend:latest"]
+  tags = [
+    "ghcr.io/${GITHUB_ACTOR}/leafnoise-backend:${VERSION}"
+  ]
 }
 
-# contexto Frontend
+# --- Frontend ---
 target "frontend" {
   context = "./frontend"
   dockerfile = "Dockerfile"
   contexts = {
-    nginx = "./nginx"    # nginx/ como contexto adicional
+    nginx = "./nginx"
   }
-  tags = ["leafnoise-frontend:latest"]
+  tags = [
+    "ghcr.io/${GITHUB_ACTOR}/leafnoise-frontend:${VERSION}"
+  ]
 }
-
