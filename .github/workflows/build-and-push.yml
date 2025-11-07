@@ -36,4 +36,5 @@ jobs:
           files: docker-bake.hcl
           push: true
           set: |
-            VERSION=${{ github.ref_name }}
+            github_actor=${{ github.actor }}
+            version=${{ github.ref_name }}

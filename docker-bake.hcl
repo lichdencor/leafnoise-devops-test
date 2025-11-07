@@ -2,20 +2,23 @@ group "default" {
   targets = ["backend", "frontend"]
 }
 
-variable "VERSION" {
+# Define variables that CI will inject via --set
+variable "github_actor" {
+  default = "lichdencor"
+}
+
+variable "version" {
   default = "latest"
 }
 
-# --- Backend ---
 target "backend" {
   context = "./backend"
   dockerfile = "Dockerfile"
   tags = [
-    "ghcr.io/${GITHUB_ACTOR}/leafnoise-backend:${VERSION}"
+    "ghcr.io/${github_actor}/leafnoise-backend:${version}"
   ]
 }
 
-# --- Frontend ---
 target "frontend" {
   context = "./frontend"
   dockerfile = "Dockerfile"
@@ -23,6 +26,7 @@ target "frontend" {
     nginx = "./nginx"
   }
   tags = [
-    "ghcr.io/${GITHUB_ACTOR}/leafnoise-frontend:${VERSION}"
+    "ghcr.io/${github_actor}/leafnoise-frontend:${version}"
   ]
 }
+
