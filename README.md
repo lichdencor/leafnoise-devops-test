@@ -10,6 +10,7 @@ Este proyecto utiliza Git submodules para organizar los componentes:
 leafnoise-devops-test/
 ├── backend/  → https://github.com/lichdencor/Flask-Example
 ├── frontend/ → https://github.com/lichdencor/angular-realworld-example-app
+├── helm-chart/
 ├── docker-bake.hcl
 ├── docker-compose.yml
 └── .github/workflows/docker-publish.yml
@@ -29,6 +30,10 @@ El proyecto usa `docker-bake.hcl` para manejar el build con contextos múltiples
 docker buildx bake
 ```
 
+### Helm Chart
+
+El directorio `helm-chart/` contiene la configuración de Kubernetes con Helm. Incluye Deployments, Services y configuración para ambos componentes (frontend y backend). El chart usa las imágenes publicadas en GHCR.
+
 ### CI/CD
 
 El workflow de GitHub Actions hace checkout completo del repositorio parent pero usa shallow checkout para los submódulos. Los repos base tienen histories extensas que no son necesarias para el build, esto reduce el tiempo de clonado.
@@ -39,7 +44,7 @@ El pipeline usa `docker/bake-action` para construir las imágenes y las publica 
 
 Los servicios están expuestos en:
 - Frontend: `localhost:4200`
-- Backend: `localhost:6969`
+- Backend: `localhost:8000`
 
 ## Instalación
 
@@ -72,6 +77,24 @@ docker compose up --build
 Si ya clonaste sin submódulos:
 ```bash
 git submodule update --init --recursive
+```
+
+### Opción 3: Deploy en Kubernetes con Helm
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/lichdencor/leafnoise-devops-test.git
+cd leafnoise-devops-test
+
+# Crear namespace e instalar chart
+kubectl create namespace leafnoise-devops-test
+helm install leafnoise ./helm-chart -n leafnoise-devops-test
+```
+
+Verificar el deploy:
+```bash
+kubectl get pods -n leafnoise-devops-test
+kubectl get services -n leafnoise-devops-test
 ```
 
 ## Uso de Imágenes Pre-construidas
@@ -123,6 +146,19 @@ docker buildx bake backend
 docker buildx bake --print
 ```
 
+### Helm
+
+```bash
+# Ver valores del chart
+helm show values ./helm-chart
+
+# Actualizar release
+helm upgrade leafnoise ./helm-chart -n leafnoise-devops-test
+
+# Desinstalar
+helm uninstall leafnoise -n leafnoise-devops-test
+```
+
 ## Troubleshooting
 
 **Los contenedores no inician:**
@@ -147,7 +183,8 @@ git submodule update --init --recursive --force
 | Docker Bake | ✅ |
 | CI/CD + GHCR | ✅ |
 | Docker Compose | ✅ |
-| Kubernetes | Pendiente |
+| Helm Chart | ✅ |
+| Kubernetes | ✅ |
 
 ## Enlaces
 
@@ -156,7 +193,7 @@ git submodule update --init --recursive --force
 - Frontend: https://github.com/lichdencor/angular-realworld-example-app
 - Registry: https://github.com/lichdencor?tab=packages
 
-## Notas
+## Notas Técnicas
 
 ### Por qué Bake
 Permite configurar contextos complejos de forma declarativa. Útil para leer archivos desde submódulos sin copiar o modificar estructura.
