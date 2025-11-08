@@ -1,0 +1,6 @@
+apiVersion: v2
+name: leafnoise
+description: Helm chart for this challenge project
+type: application
+version: 0.1.0
+appVersion: "1.0"

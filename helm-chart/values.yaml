@@ -1,0 +1,13 @@
+backend:
+  image:
+    repository: ghcr.io/lichdencor/leafnoise-backend
+    tag: latest
+  port: 8000
+  replicas: 1
+
+frontend:
+  image:
+    repository: ghcr.io/lichdencor/leafnoise-frontend
+    tag: latest
+  port: 80
+  replicas: 1

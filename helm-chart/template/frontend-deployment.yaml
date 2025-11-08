@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: leafnoise-devops-test
 spec:
-  replicas: 1
+  replicas: { { .Values.frontend.replicas } }
   selector:
     matchLabels:
       app: frontend
@@ -15,9 +14,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/lichdencor/leafnoise-frontend:latest
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           ports:
-            - containerPort: 5173
+            - containerPort: { { .Values.frontend.port } }
           env:
             - name: BACKEND_URL
-              value: "http://flask-backend:8000"
+              value: "http://flask-backend:{{ .Values.backend.port }}"
