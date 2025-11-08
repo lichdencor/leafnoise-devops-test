@@ -20,4 +20,4 @@ spec:
             - containerPort: 5173
           env:
             - name: BACKEND_URL
-              value: "http://backend-service.leafnoise-devops-test.svc.cluster.local:8000"
+              value: "http://flask-backend:8000"
