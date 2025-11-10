@@ -90,6 +90,9 @@ cd leafnoise-devops-test
 # Crear namespace e instalar chart
 kubectl create namespace leafnoise-devops-test
 helm install leafnoise ./helm-chart -n leafnoise-devops-test
+
+# Hacer port forward
+kubectl port-forward svc/frontend-service 8080:80 -n leafnoise-devops-test
 ```
 
 Verificar el deploy:
