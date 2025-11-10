@@ -70,8 +70,9 @@ Si necesitás modificar los Dockerfiles o trabajar en desarrollo:
 git clone --recurse-submodules https://github.com/lichdencor/leafnoise-devops-test.git
 cd leafnoise-devops-test
 
-# Levantar servicios con build
-docker compose up --build
+# Levantar servicios
+docker buildx bake --no-cache
+docker compose up
 ```
 
 Si ya clonaste sin submódulos:
