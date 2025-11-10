@@ -7,6 +7,6 @@ spec:
     app: frontend
   ports:
     - name: http
-      port: { { .Values.frontend.port } }
-      targetPort: { { .Values.frontend.port } }
+      port: {{ .Values.frontend.port }}
+      targetPort: {{ .Values.frontend.port }}
   type: LoadBalancer
