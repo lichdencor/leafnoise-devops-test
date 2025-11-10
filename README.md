@@ -44,7 +44,7 @@ El pipeline usa `docker/bake-action` para construir las imágenes y las publica 
 
 Los servicios están expuestos en:
 - Frontend: `localhost:4200`
-- Backend: `localhost:8000`
+- Backend: `localhost:8000` -> con reverse proxy para servirlo como api desde localhost:4200/api/
 
 ## Instalación
 
